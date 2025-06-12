@@ -1,4 +1,5 @@
 set(LIBNAME litesql)
+set (CMAKE_OSX_ARCHITECTURE arm64)
 
 ##############################################################################
 # litesql-util library
@@ -82,7 +83,7 @@ else(LITESQL_USE_SYSTEM_SQLITE AND SQLITE3_FOUND)
     GIT_TAG origin/master 
   )
   FetchContent_MakeAvailable(libsqlite3)
-#  install(EXPORT sqlite3 DESTINATION lib)
+  install(EXPORT sqlite3 DESTINATION lib)
 
 
   set(SQLITE3_LIBRARIES sqlite3)  
@@ -96,12 +97,12 @@ if (LITESQL_WITH_SQLITE3)
               sqlite3/sqlite3.hpp)
   target_link_libraries(${LIBNAME}_sqlite PRIVATE ${SQLITE3_LIBRARIES} litesql-util)
   target_include_directories(${LIBNAME}_sqlite PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-#  install(TARGETS ${LIBNAME}_sqlite  EXPORT ${LIBNAME}_sqlite
-#            RUNTIME DESTINATION lib
-#            LIBRARY DESTINATION lib
-#            ARCHIVE DESTINATION lib/static
-#            COMPONENT devel)
-#  install(EXPORT ${LIBNAME}_sqlite DESTINATION lib)
+  install(TARGETS ${LIBNAME}_sqlite  EXPORT ${LIBNAME}_sqlite
+            RUNTIME DESTINATION lib
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib/static
+            COMPONENT devel)
+  install(EXPORT ${LIBNAME}_sqlite DESTINATION lib)
   if (MSVC)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/debug/${LIBNAME}_sqlited.lib DESTINATION lib/static COMPONENT devel)
   endif(MSVC)

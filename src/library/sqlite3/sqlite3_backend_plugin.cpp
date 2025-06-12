@@ -4,7 +4,10 @@
 using namespace litesql;
 
 extern "C" {
-__declspec(dllexport)  Backend* createBackend(const std::string& parameter)
+#ifdef WIN32
+__declspec(dllexport)
+#endif
+  Backend* createBackend(const std::string& parameter)
 {
   Backend* pBackend = nullptr;
   try {
@@ -14,8 +17,10 @@ __declspec(dllexport)  Backend* createBackend(const std::string& parameter)
   }
   return pBackend;
 }
-
-__declspec(dllexport) void deleteBackend(Backend* backend)
+#ifdef WIN32
+__declspec(dllexport)
+#endif
+ void deleteBackend(Backend* backend)
 {
   if (backend)
   {
